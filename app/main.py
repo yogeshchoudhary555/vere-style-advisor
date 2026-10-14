@@ -93,7 +93,22 @@ def analyze(selfie: UploadFile = File(...)):
     if key:
         try:
             file_id = youcam.upload_file(key, path)
-            color = youcam.skin_tone_analysis(key, file_id)
+            # Try strict face-angle check first; fall back to medium (free —
+            # failed tasks consume no units) for slightly tilted real selfies.
+            color = None
+            last_err = None
+            for strictness in ("high", "medium"):
+                try:
+                    color = youcam.skin_tone_analysis(key, file_id,
+                                                      strictness=strictness)
+                    break
+                except Exception as exc:
+                    if "face_angle" in str(exc):
+                        last_err = exc
+                        continue
+                    raise
+            if color is None:
+                raise last_err
             profile = SkinProfile(
                 skin_color=color.get("skin_color", "#b9947c"),
                 eye_color=color.get("eye_color", "#000000"),
