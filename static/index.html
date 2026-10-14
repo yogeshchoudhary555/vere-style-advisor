@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VÉRÉ Style Advisor — AI try-on that tells you no</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header>
+  <div class="brand">VÉRÉ <span>Style Advisor</span></div>
+  <div class="mode" id="modeBadge">…</div>
+</header>
+
+<main>
+  <!-- STEP 1 -->
+  <section class="card" id="step1">
+    <h2>1 · Your selfie</h2>
+    <p class="hint">Front-facing photo. With an API key we run YouCam Skin Tone Analysis
+    on it — without one, a demo profile is used so you can still see the full flow.</p>
+    <div class="row">
+      <input type="file" id="selfieInput" accept="image/jpeg,image/png">
+      <button id="useDemoBtn" class="ghost">Use demo portrait</button>
+      <button id="analyzeBtn" class="primary">Analyze skin tone</button>
+    </div>
+    <div class="row preview">
+      <img id="selfiePreview" alt="" class="thumb hidden">
+      <div id="profileBox" class="profile hidden"></div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card hidden" id="step2">
+    <h2>2 · The advisor's verdict</h2>
+    <p class="hint">Refused items first — each with the stated reason — then the ones
+    worth rendering.</p>
+    <div id="verdicts" class="grid"></div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card hidden" id="step3">
+    <h2>3 · Try it on</h2>
+    <p class="hint" id="tryonHint"></p>
+    <img id="tryonResult" alt="Try-on result" class="result hidden">
+    <p class="tiny" id="tryonNote"></p>
+  </section>
+
+  <!-- BUDGET -->
+  <section class="card" id="budgetCard">
+    <h2>Unit budget</h2>
+    <p class="hint">Every AI call is a visible line item.
+    <span id="estNote"></span></p>
+    <table id="budgetTable"><tbody></tbody></table>
+    <div class="total">Total spent this session: <b id="budgetTotal">0 units</b></div>
+    <div class="row">
+      <button id="creditsBtn" class="ghost">Check account balance</button>
+      <span id="creditsOut" class="tiny"></span>
+    </div>
+  </section>
+</main>
+
+<footer>VÉRÉ Style Advisor · Built on the YouCam AI API (Perfect Corp) · Hackathon entry</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>
